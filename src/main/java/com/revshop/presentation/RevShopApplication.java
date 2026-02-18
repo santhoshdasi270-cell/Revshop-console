@@ -8,6 +8,9 @@ import com.revshop.repository.ProductRepository;
 import com.revshop.service.ProductService;
 import com.revshop.model.Buyer;
 import com.revshop.service.CartService;
+import com.revshop.repository.OrderRepository;
+import com.revshop.service.OrderService;
+
 
 
 
@@ -23,6 +26,9 @@ public class RevShopApplication {
         ProductRepository productRepository = new ProductRepository();
         ProductService productService = new ProductService(productRepository);
         CartService cartService = new CartService();
+        OrderRepository orderRepository = new OrderRepository();
+        OrderService orderService = new OrderService(orderRepository);
+
 
 
         Scanner scanner = new Scanner(System.in);
@@ -84,7 +90,8 @@ public class RevShopApplication {
                     if (loggedInUser instanceof Seller) {
                         sellerMenu((Seller) loggedInUser, productService, scanner);
                     } else if (loggedInUser instanceof Buyer) {
-                        buyerMenu((Buyer) loggedInUser, productService, cartService, scanner);
+                        buyerMenu((Buyer) loggedInUser, productService, cartService, orderService, scanner);
+
                     }
 
 
@@ -162,9 +169,11 @@ public class RevShopApplication {
             }
         }
     }
+    // buyer menu
     private static void buyerMenu(Buyer buyer,
                                   ProductService productService,
                                   CartService cartService,
+                                  OrderService orderService,
                                   Scanner scanner) {
 
         while (true) {
@@ -174,7 +183,9 @@ public class RevShopApplication {
             System.out.println("2. Add to Cart");
             System.out.println("3. View Cart");
             System.out.println("4. Remove from Cart");
-            System.out.println("5. Logout");
+            System.out.println("5. Checkout");
+            System.out.println("6. View Orders");
+            System.out.println("7. Logout");
             System.out.print("Choose option: ");
 
             int choice = scanner.nextInt();
@@ -213,8 +224,15 @@ public class RevShopApplication {
                     String removeId = scanner.nextLine();
                     cartService.removeFromCart(buyer, removeId);
                     break;
-
                 case 5:
+                    orderService.checkout(buyer);
+                    break;
+
+                case 6:
+                    orderService.viewOrders(buyer);
+                    break;
+
+                case 7:
                     System.out.println("Logging out...");
                     return;
 
