@@ -8,11 +8,15 @@ public class Seller extends User {
     private String businessName;
     private List<Product> products;
 
-    public Seller(String id, String name, String email, String password, String businessName) {
-        super(id, name, email, password);
+    public Seller(String id, String name, String email, String password,
+                  String securityQuestion, String securityAnswer,
+                  String businessName) {
+
+        super(id, name, email, password, securityQuestion, securityAnswer);
         this.businessName = businessName;
         this.products = new ArrayList<>();
     }
+
 
     public String getBusinessName() {
         return businessName;

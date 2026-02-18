@@ -15,12 +15,13 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+
     public ProductRepository getProductRepository() {
         return productRepository;
     }
 
+    // ================= ADD PRODUCT =================
 
-    // Add product
     public void addProduct(String name,
                            String description,
                            double price,
@@ -46,13 +47,13 @@ public class ProductService {
         );
 
         productRepository.save(product);
-
         seller.addProduct(product);
 
         System.out.println("Product added successfully!");
     }
 
-    // View all products
+    // ================= VIEW ALL PRODUCTS =================
+
     public void viewAllProducts() {
 
         List<Product> products = productRepository.findAll();
@@ -61,12 +62,9 @@ public class ProductService {
             System.out.println("No products available.");
             return;
         }
-        if (product.getStock() <= 5) {
-            System.out.println("⚠ LOW STOCK ALERT!");
-        }
-
 
         for (Product product : products) {
+
             System.out.println("--------------------------------");
             System.out.println("Product ID: " + product.getId());
             System.out.println("Name: " + product.getName());
@@ -75,6 +73,11 @@ public class ProductService {
             System.out.println("Stock: " + product.getStock());
             System.out.println("Category: " + product.getCategory().getName());
             System.out.println("Seller: " + product.getSeller().getName());
+
+            // Low Stock Alert
+            if (product.getStock() <= product.getThreshold()) {
+                System.out.println("⚠ LOW STOCK ALERT for: " + product.getName());
+            }
         }
     }
 }

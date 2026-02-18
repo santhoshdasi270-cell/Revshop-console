@@ -13,7 +13,7 @@ public class OrderRepository {
         orders.add(order);
     }
 
-    public List<Order> findAll() {
+    public static List<Order> findAll() {
         return orders;
     }
 }

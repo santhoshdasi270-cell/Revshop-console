@@ -33,4 +33,28 @@ public class ProductRepository {
     public void delete(String id) {
         products.removeIf(product -> product.getId().equals(id));
     }
+    // Find products by category
+    public List<Product> findByCategory(String categoryName) {
+        List<Product> result = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getCategory().getName().equalsIgnoreCase(categoryName)) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+
+    // Search products by keyword (in name or description)
+    public List<Product> searchByKeyword(String keyword) {
+        List<Product> result = new ArrayList<>();
+        String lowerKeyword = keyword.toLowerCase();
+        for (Product product : products) {
+            if (product.getName().toLowerCase().contains(lowerKeyword) ||
+                    product.getDescription().toLowerCase().contains(lowerKeyword)) {
+                result.add(product);
+            }
+        }
+        return result;
+    }
+
 }

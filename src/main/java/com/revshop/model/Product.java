@@ -14,6 +14,10 @@ public class Product {
     private Category category;
     private Seller seller;
     private List<Review> reviews = new ArrayList<>();
+    private int threshold = 5;
+    private double discountPrice;
+
+
 
 
     public Product(String id, String name, String description,
@@ -67,6 +71,17 @@ public class Product {
     public void addReview(Review review) {
         reviews.add(review);
     }
+    public void setThreshold(int threshold) {
+        this.threshold = threshold;
+    }
+    public int getThreshold(){
+        return threshold;
+    }
+    public double getFinalPrice() {
+        return discountPrice > 0 ? discountPrice : price;
+    }
 
-
+    public void setDiscountPrice(double discountPrice) {
+        this.discountPrice = discountPrice;
+    }
 }

@@ -6,13 +6,20 @@ public abstract class User {
     private String name;
     private String email;
     private String password;
+    private String securityQuestion;
+    private String securityAnswer;
 
-    public User(String id, String name, String email, String password) {
+
+    public User(String id, String name, String email, String password,
+                String securityQuestion, String securityAnswer) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.securityQuestion = securityQuestion;
+        this.securityAnswer = securityAnswer;
     }
+
 
     // Getters
     public String getId() {
@@ -26,6 +33,14 @@ public abstract class User {
     public String getEmail() {
         return email;
     }
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public String getSecurityAnswer() {
+        return securityAnswer;
+    }
+
 
     public String getPassword() {
         return password;

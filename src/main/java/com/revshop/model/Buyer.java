@@ -9,12 +9,14 @@ public class Buyer extends User {
     private Cart cart;
 
 
-    public Buyer(String id, String name, String email, String password) {
-        super(id, name, email, password);
+    public Buyer(String id, String name, String email, String password,
+                 String securityQuestion, String securityAnswer) {
+
+        super(id, name, email, password, securityQuestion, securityAnswer);
         this.favorites = new ArrayList<>();
         this.cart = new Cart();
-
     }
+
 
     public List<Product> getFavorites() {
         return favorites;
