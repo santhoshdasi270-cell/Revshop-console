@@ -80,4 +80,22 @@ public class OrderService {
             }
         }
     }
+    public static void viewSellerOrders(Seller seller) {
+
+        for (Order order : orderRepository.findAll()) {
+
+            for (CartItem item : order.getItems()) {
+
+                if (item.getProduct().getSeller().getId().equals(seller.getId())) {
+
+                    System.out.println("================================");
+                    System.out.println("Order ID: " + order.getId());
+                    System.out.println("Buyer: " + order.getBuyer().getName());
+                    System.out.println("Product: " + item.getProduct().getName());
+                    System.out.println("Quantity: " + item.getQuantity());
+                }
+            }
+        }
+    }
+
 }

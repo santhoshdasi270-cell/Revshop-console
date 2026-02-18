@@ -1,4 +1,7 @@
 package com.revshop.model;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Product {
 
@@ -10,6 +13,8 @@ public class Product {
     private int stock;
     private Category category;
     private Seller seller;
+    private List<Review> reviews = new ArrayList<>();
+
 
     public Product(String id, String name, String description,
                    double price, double mrp, int stock,
@@ -56,4 +61,12 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    public List<Review> getReviews() {
+        return reviews;
+    }
+    public void addReview(Review review) {
+        reviews.add(review);
+    }
+
+
 }

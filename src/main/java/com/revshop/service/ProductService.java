@@ -61,6 +61,10 @@ public class ProductService {
             System.out.println("No products available.");
             return;
         }
+        if (product.getStock() <= 5) {
+            System.out.println("⚠ LOW STOCK ALERT!");
+        }
+
 
         for (Product product : products) {
             System.out.println("--------------------------------");

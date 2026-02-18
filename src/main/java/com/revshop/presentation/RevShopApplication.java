@@ -1,17 +1,12 @@
 package com.revshop.presentation;
 
 import com.revshop.repository.UserRepository;
-import com.revshop.service.AuthenticationService;
+import com.revshop.service.*;
 import com.revshop.model.Seller;
 import com.revshop.model.User;
 import com.revshop.repository.ProductRepository;
-import com.revshop.service.ProductService;
 import com.revshop.model.Buyer;
-import com.revshop.service.CartService;
 import com.revshop.repository.OrderRepository;
-import com.revshop.service.OrderService;
-
-
 
 
 import java.util.Scanner;
@@ -28,6 +23,8 @@ public class RevShopApplication {
         CartService cartService = new CartService();
         OrderRepository orderRepository = new OrderRepository();
         OrderService orderService = new OrderService(orderRepository);
+        ReviewService reviewService = new ReviewService();
+
 
 
 
@@ -117,7 +114,8 @@ public class RevShopApplication {
             System.out.println("\n===== Seller Menu =====");
             System.out.println("1. Add Product");
             System.out.println("2. View All Products");
-            System.out.println("3. Logout");
+            System.out.println("3. View My Orders");
+            System.out.println("4. Logout");
             System.out.print("Choose option: ");
 
             int choice = scanner.nextInt();
@@ -161,8 +159,13 @@ public class RevShopApplication {
                     break;
 
                 case 3:
+                    OrderService.viewSellerOrders(seller);
+                    break;
+
+                case 4:
                     System.out.println("Logging out...");
                     return;
+
 
                 default:
                     System.out.println("Invalid choice!");
@@ -185,7 +188,8 @@ public class RevShopApplication {
             System.out.println("4. Remove from Cart");
             System.out.println("5. Checkout");
             System.out.println("6. View Orders");
-            System.out.println("7. Logout");
+            System.out.println("7. Add Review");
+            System.out.println("8. Logout");
             System.out.print("Choose option: ");
 
             int choice = scanner.nextInt();
@@ -233,6 +237,27 @@ public class RevShopApplication {
                     break;
 
                 case 7:
+                    productService.viewAllProducts();
+                    System.out.print("Enter Product ID: ");
+                    String rProductId = scanner.nextLine();
+
+                    System.out.print("Enter Rating (1-5): ");
+                    int rating = scanner.nextInt();
+                    scanner.nextLine();
+
+                    System.out.print("Enter Comment: ");
+                    String comment = scanner.nextLine();
+
+                    ReviewService.addReview(
+                            buyer,
+                            productService.getProductRepository().findById(rProductId),
+                            rating,
+                            comment
+                    );
+                    break;
+
+
+                case 8:
                     System.out.println("Logging out...");
                     return;
 
