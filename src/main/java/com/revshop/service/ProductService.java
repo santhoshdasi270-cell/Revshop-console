@@ -15,6 +15,10 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
+    public ProductRepository getProductRepository() {
+        return productRepository;
+    }
+
 
     // Add product
     public void addProduct(String name,

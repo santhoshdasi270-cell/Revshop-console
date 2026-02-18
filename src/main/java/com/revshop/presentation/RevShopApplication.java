@@ -6,6 +6,9 @@ import com.revshop.model.Seller;
 import com.revshop.model.User;
 import com.revshop.repository.ProductRepository;
 import com.revshop.service.ProductService;
+import com.revshop.model.Buyer;
+import com.revshop.service.CartService;
+
 
 
 import java.util.Scanner;
@@ -19,6 +22,8 @@ public class RevShopApplication {
         AuthenticationService authService = new AuthenticationService(userRepository);
         ProductRepository productRepository = new ProductRepository();
         ProductService productService = new ProductService(productRepository);
+        CartService cartService = new CartService();
+
 
         Scanner scanner = new Scanner(System.in);
 
@@ -78,9 +83,10 @@ public class RevShopApplication {
 
                     if (loggedInUser instanceof Seller) {
                         sellerMenu((Seller) loggedInUser, productService, scanner);
-                    } else {
-                        System.out.println("Buyer menu will be implemented next.");
+                    } else if (loggedInUser instanceof Buyer) {
+                        buyerMenu((Buyer) loggedInUser, productService, cartService, scanner);
                     }
+
 
                     break;
 
@@ -94,7 +100,7 @@ public class RevShopApplication {
         }
     }
 
-    // ✅ OUTSIDE main method
+    //  OUTSIDE main method
     private static void sellerMenu(Seller seller,
                                    ProductService productService,
                                    Scanner scanner) {
@@ -156,4 +162,66 @@ public class RevShopApplication {
             }
         }
     }
+    private static void buyerMenu(Buyer buyer,
+                                  ProductService productService,
+                                  CartService cartService,
+                                  Scanner scanner) {
+
+        while (true) {
+
+            System.out.println("\n===== Buyer Menu =====");
+            System.out.println("1. Browse Products");
+            System.out.println("2. Add to Cart");
+            System.out.println("3. View Cart");
+            System.out.println("4. Remove from Cart");
+            System.out.println("5. Logout");
+            System.out.print("Choose option: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    productService.viewAllProducts();
+                    break;
+
+                case 2:
+                    productService.viewAllProducts();
+                    System.out.print("Enter Product ID: ");
+                    String productId = scanner.nextLine();
+
+                    System.out.print("Enter Quantity: ");
+                    int quantity = scanner.nextInt();
+                    scanner.nextLine();
+
+                    cartService.addToCart(
+                            buyer,
+                            productService
+                                    .getProductRepository()
+                                    .findById(productId),
+                            quantity
+                    );
+                    break;
+
+                case 3:
+                    cartService.viewCart(buyer);
+                    break;
+
+                case 4:
+                    System.out.print("Enter Product ID to remove: ");
+                    String removeId = scanner.nextLine();
+                    cartService.removeFromCart(buyer, removeId);
+                    break;
+
+                case 5:
+                    System.out.println("Logging out...");
+                    return;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+    }
+
 }
